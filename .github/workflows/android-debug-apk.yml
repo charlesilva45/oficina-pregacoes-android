@@ -14,7 +14,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
+      - name: Verificar Android SDK do runner
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          test -d "$ANDROID_HOME" || { echo 'Android SDK ausente'; exit 1; }
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --version
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
